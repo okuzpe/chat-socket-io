@@ -1,21 +1,30 @@
 import express from 'express';
-import path from 'path';
+import * as http from 'http';
+import * as WebSocket from 'ws';
 
-// Importing Routes
-import IndexRoutes from './routes'
-import blockAdan from './block_parents';
-import { start as startBlockChain } from './start_blockchain';
+const app = express();
 
+//initialize a simple http server
+const server = http.createServer(app);
 
-const app=express();
+//initialize the WebSocket server instance
+const ws = new WebSocket.Server({ server });
 
-app.set('port',process.env.port || 3000);
+ws.on('connection', (ws: WebSocket) => {
 
-//Routes
-// app.use('/',IndexRoutes);
+    //connection is up, let's add a simple simple event
+    ws.on('message', (message: string) => {
 
-startBlockChain()
+        //log the received message and send it back to the client
+        console.log('received: %s', message);
+        ws.send(`Hello, you sent -> ${message}`);
+    });
 
-app.listen(app.get('port'),()=>{
-    console.log("----------Server Start-----------");
+    //send immediatly a feedback to the incoming connection    
+    ws.send('Hi there, I am a WebSocket server');
+});
+
+//start our server
+server.listen(process.env.PORT || 8080, () => {
+    console.log(`Server started on port ${process.env.PORT} :)`);
 });
