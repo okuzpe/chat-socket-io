@@ -1,30 +1,18 @@
-import express from 'express';
-import * as http from 'http';
-import * as WebSocket from 'ws';
+import * as https from "http";
+import * as socketio from "socket.io";
+import express from "express";
+import * as path from "path";
+import createServer from "./routes/socket-io";
 
 const app = express();
+app.set("port", process.env.PORT || 3000);
 
-//initialize a simple http server
-const server = http.createServer(app);
+const server =createServer(app)
 
-//initialize the WebSocket server instance
-const ws = new WebSocket.Server({ server });
-
-ws.on('connection', (ws: WebSocket) => {
-
-    //connection is up, let's add a simple simple event
-    ws.on('message', (message: string) => {
-
-        //log the received message and send it back to the client
-        console.log('received: %s', message);
-        ws.send(`Hello, you sent -> ${message}`);
-    });
-
-    //send immediatly a feedback to the incoming connection    
-    ws.send('Hi there, I am a WebSocket server');
+app.get("/", (req: any, res: any) => {
+  res.sendFile(path.resolve("./src/html/index.html"));
 });
 
-//start our server
-server.listen(process.env.PORT || 8080, () => {
-    console.log(`Server started on port ${process.env.PORT} :)`);
+ server.listen(3000, function() {
+  console.log("listening on *:3000");
 });

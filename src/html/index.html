@@ -8,6 +8,13 @@
     <title>Document</title>
   </head>
   <body>
+    <!-- <form method="POST"  action="/action_page.php">
+      First name:<br />
+      <input type="text" name="firstname" value="Mickey" /><br />
+      Last name:<br />
+      <input type="text" name="lastname" value="Mouse" /><br /><br />
+      <input type="submit" value="Submit" />
+    </form> -->
     <button onClick="sendMsg()">Hit Me</button>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
@@ -15,7 +22,15 @@
       const socket = io("http://localhost:3000");
 
       function sendMsg() {
-        socket.emit("message", "HELLO WORLD");
+        var atack =Math.random() * (15 - 10 ) + 10;
+        // var obj = {
+        //   "attack":3,
+        //   "id_player":2,
+        //   "id_target":2
+        // }
+          var obj=`{"attack" : "${atack.toFixed(0)}","id_player":"1","id_target":"2"}`;
+
+        socket.emit("attack", obj);
       }
     </script>
   </body>
