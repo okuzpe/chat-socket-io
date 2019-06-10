@@ -3,7 +3,6 @@ import * as socketio from "socket.io";
 import express from "express";
 import * as path from "path";
 import { Player } from "../../interfaces/player";
-import { type } from "os";
 
 var player: Player[]=[];
 
@@ -19,18 +18,20 @@ const createServer = (app: express.Express) => {
         z: 250,
         life:100
       });
+      // console.log(player)
 
     socket.on("attack", function(data:string) {
       const json=JSON.parse(data)
       const index = player.indexOf(socket.id);
+      var p=player.find(x=>x.id=socket.id)
+      p!.life-=json.attack
       console.log(json.attack)
-      console.log(player[index].life);
+      console.log(player);
     });
 
     socket.on("disconnect", function() {
       const index = player.indexOf(socket.id);
       player.splice(index, 1);
-
     });
   });
   return server;

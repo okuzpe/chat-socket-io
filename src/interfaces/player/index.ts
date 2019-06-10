@@ -1,5 +1,5 @@
 export interface Player{
-    id:number
+    id:number,
     x:number,
     y:number,
     z:number,

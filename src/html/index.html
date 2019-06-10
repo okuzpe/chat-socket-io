@@ -19,7 +19,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
-      const socket = io("http://localhost:3000");
+      const socket = io("http://localhost:3000")  , news = io.connect('http://localhost/news');
 
       function sendMsg() {
         var atack =Math.random() * (15 - 10 ) + 10;
