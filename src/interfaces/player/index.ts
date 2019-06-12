@@ -4,5 +4,6 @@ export interface Player{
     y:number,
     z:number,
     life:number,
+    alive:boolean
 }
 
