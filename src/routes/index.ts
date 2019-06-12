@@ -1,5 +1,11 @@
-import { Router, Request, Response, NextFunction } from "express";
-const routes: Router = Router();
+
+import express = require('express');
+// Routes
+import loginRouter from './login'
+
+const routes = express.Router();
 
 //Controller
-// routes.use("/", chatRouter);
+routes.use('/',loginRouter)
+
+export default routes;

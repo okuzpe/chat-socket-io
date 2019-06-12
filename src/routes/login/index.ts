@@ -1,10 +1,15 @@
-import express, { Request, Response } from "express";
-import * as socketio from "socket.io";
-const socket = io("http://localhost:3000");
+import express,{ Request, Response } from "express";
 
-const sendMessage= async (req:Request,res:Response):Promise<Response> =>{
 
-    return res
+
+const loginRouter = express.Router();
+
+const login=async (req: Request, res: Response) => {
+    return res.status(200).json({
+        error_code:'si',
+        message:'loged',
+      });
 }
 
-export default sendMessage;
+loginRouter.get('/login',login)
+export default loginRouter;

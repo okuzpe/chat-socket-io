@@ -18,26 +18,34 @@
     </form> -->
     <button onClick="sendMsg()">Hit Me</button>
 
+    <p id="status"></p>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
       const socket = io("http://localhost:3000");
 
       function sendMsg() {
         var atack = Math.random() * (15 - 10) + 10;
-        // var obj = {
-        //   "attack":3,
-        //   "id_player":2,
-        //   "id_target":2
-        // }
         var obj = `{"attack" : "${atack.toFixed(
           0
         )}","id_player":"1","id_target":"2"}`;
 
         socket.emit("attack", obj);
       }
+
       socket.on("data", function(data) {
-        document.getElementById("texto").innerHTML = data[0].life+ "\n"+ data[0].alive;
+        document.getElementById("texto").innerHTML =
+          data.life + "\n" + data.alive;
+        // console.log(data);
+      });
+
+      socket.on("locationInfo", function(data) {
         console.log(data);
+      });
+
+      socket.on("allInfo", function(data) {
+        document.getElementById("status").innerHTML =JSON.stringify(data);
+        // console.log(JSON.stringify(data));
       });
     </script>
   </body>

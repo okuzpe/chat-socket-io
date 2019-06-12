@@ -2,7 +2,8 @@ import * as https from "http";
 import * as socketio from "socket.io";
 import express from "express";
 import * as path from "path";
-import createServer from "./routes/socket-io";
+import createServer from "./socket-io";
+import router from './routes'
 // import cors from 'cors'
 const app = express();
 // app.use(cors())
@@ -13,7 +14,7 @@ const server = createServer(app);
 app.get("/", (req: any, res: any) => {
   res.sendFile(path.resolve("./src/html/index.html"));
 });
-
+app.use('/', router);
 server.listen(3000, function() {
   console.log("listening on *:3000");
 });

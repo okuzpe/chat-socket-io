@@ -3,12 +3,12 @@ import * as socketio from "socket.io";
 import express from "express";
 import * as path from "path";
 import { Player } from "../../interfaces/player";
-import { isObject } from "util";
 
-const attack =  (socket: any, player: Player[],io:socketio.Server) => {
+const attack =  (socket: any, players: Player[],io:socketio.Server) => {
   socket.on("attack", function(data: string) {
     const json = JSON.parse(data);
-    const p = player.find(x => x.id == socket.id);
+    const p = players.find(x => x.id == socket.id);
+    //da error
     const lifePoints = p!.life - json.attack;
 
     if (lifePoints < 0) {
@@ -17,8 +17,7 @@ const attack =  (socket: any, player: Player[],io:socketio.Server) => {
     } else {
       p!.life = lifePoints;
     }
-    socket.emit('data',player);
-    console.log('entra')
+    socket.emit('data',p);
   });
   
 
